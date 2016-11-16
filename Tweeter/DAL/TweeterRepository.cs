@@ -37,11 +37,11 @@ namespace Tweeter.DAL
             return false;
             */
             
-            Twit found_twit = Context.TweeterUsers.FirstOrDefault(u => u.BaseUser.UserName.ToLower() == v.ToLower());
-            if (found_twit != null)
-            {
-                return true;
-            }
+            //Twit found_twit = Context.TweeterUsers.FirstOrDefault(u => u.BaseUser.UserName.ToLower() == v.ToLower());
+            //if (found_twit != null)
+            //{
+            //    return true;
+            //}
 
             return false;
             
