@@ -46,5 +46,37 @@ namespace Tweeter.DAL
             return false;
             
         }
+
+        public void FollowUser(string user, string follow)
+        {
+            if(user != follow)
+            {
+                int a = 1;
+                Twit Follower = Context.TweeterUsers.FirstOrDefault(x => x.BaseUser.UserName == user);
+                Twit Followee = Context.TweeterUsers.FirstOrDefault(x => x.BaseUser.UserName == follow);
+                if (Follower.Follows == null)
+                {
+                    Follower.Follows = new List<Twit>
+                    {
+                        Followee
+                    };
+                } else
+                {
+                    if (!Follower.Follows.Contains(Followee))
+                    {
+                        Follower.Follows.Add(Followee);
+                    }
+                }
+                Context.SaveChanges();
+            }
+        }
+
+        public void UnfollowUser(string user, string follow)
+        {
+            Twit Follower = Context.TweeterUsers.FirstOrDefault(x => x.BaseUser.UserName == user);
+            Twit Followee = Context.TweeterUsers.FirstOrDefault(x => x.BaseUser.UserName == follow);
+            Follower.Follows.Remove(Followee);
+            Context.SaveChanges();
+        }
     }
 }

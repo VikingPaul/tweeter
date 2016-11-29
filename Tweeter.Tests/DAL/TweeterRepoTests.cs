@@ -110,5 +110,30 @@ namespace Tweeter.Tests.DAL
             // Assert
             Assert.IsNotNull(found_twit);
         }
+        [TestMethod]
+        public void RepoCanAddFollowers()
+        {
+            ConnectToDatastore();
+            Repo.FollowUser("michealb", "sallym");
+            Twit user = Repo.UsernameExistsOfTwit("michealb");
+            Assert.AreEqual(1, user.Follows.Count);
+        }
+        [TestMethod]
+        public void RepoCanUnfollowUser()
+        {
+            ConnectToDatastore();
+            Repo.FollowUser("michealb", "sallym");
+            Repo.UnfollowUser("michealb", "sallym");
+            Twit user = Repo.UsernameExistsOfTwit("michealb");
+            Assert.AreEqual(0, user.Follows.Count);
+        }
+        [TestMethod]
+        public void RepoDoesntLetUserFollowSelf()
+        {
+            ConnectToDatastore();
+            Repo.FollowUser("michealb", "michealb");
+            Twit user = Repo.UsernameExistsOfTwit("michealb");
+            Assert.IsNull(user.Follows);
+        }
     }
 }
